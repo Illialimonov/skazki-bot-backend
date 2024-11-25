@@ -47,18 +47,6 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    //24h
-    public ResponseEntity<?> collectBonus24h() {
-        User user = getCurrentUser();
-        if (LocalDateTime.now().minusHours(24).isAfter(user.getLastDailyReward())){
-            user.setCoins(user.getCoins()+50);
-            user.setLastDailyReward(LocalDateTime.now());
-            userRepository.save(user);
-            return ResponseEntity.status(HttpStatus.OK).body("Bonus successfully rewarded!");
-        } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("It has not been 24 hours since last bonus");
-        }
-    }
 
     //00:00
     public ResponseEntity<?> collectBonus() {
